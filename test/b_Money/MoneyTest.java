@@ -25,6 +25,7 @@ public class MoneyTest {
 
 	@Test
 	public void testGetAmount() {
+		/* Check if you get the correct amounts of Money */
 		assertEquals(100, SEK100.getAmount(), 0.001);
 		assertEquals(10, EUR10.getAmount(), 0.001);
 		assertEquals(200, SEK200.getAmount(),0.001);
@@ -36,6 +37,7 @@ public class MoneyTest {
 
 	@Test
 	public void testGetCurrency() {
+		/* Check if you get the correct Currency of Money */
 		assertEquals(SEK, SEK100.getCurrency());
 		assertEquals(EUR, EUR10.getCurrency());
 		assertEquals(SEK, SEK200.getCurrency());
@@ -47,6 +49,7 @@ public class MoneyTest {
 
 	@Test
 	public void testToString() {
+		/* Check if the conversion of Money to String is correct */
 		assertEquals("100.0 SEK", SEK100.toString());
 		assertEquals("10.0 EUR", EUR10.toString());
 		assertEquals("200.0 SEK", SEK200.toString());
@@ -61,6 +64,7 @@ public class MoneyTest {
 	* */
 	@Test
 	public void testUniversalValue() {
+		/* Check if the universal value is gives correct results */
 		assertEquals(1500, (int)SEK100.universalValue());
 		assertEquals(1500, (int)EUR10.universalValue());
 		assertEquals(3000, (int)SEK200.universalValue());
@@ -72,6 +76,7 @@ public class MoneyTest {
 
 	@Test
 	public void testEqualsMoney() {
+		/* Check if you get correct results for comparing values of Money */
 		assertEquals(true, SEK100.equals(EUR10));
 		assertEquals(false, EUR10.equals(EUR20));
 		assertEquals(true, SEK200.equals(EUR20));
@@ -83,6 +88,7 @@ public class MoneyTest {
 
 	@Test
 	public void testAdd() {
+		/* Check if adding Money works */
 		assertEquals(SEK100, SEK100.add(SEK0));
 		assertEquals(EUR20, EUR10.add(SEK100));
 		assertEquals(SEK200, SEK200.add(SEK0));
@@ -94,6 +100,7 @@ public class MoneyTest {
 
 	@Test
 	public void testSub() {
+		/* Check if subtracting Money works */
 		assertEquals(SEK0, SEK100.sub(EUR10));
 		assertEquals(EUR0, EUR10.sub(EUR10));
 		assertEquals(SEK100, SEK200.sub(EUR10));
@@ -105,6 +112,7 @@ public class MoneyTest {
 
 	@Test
 	public void testIsZero() {
+		/* Check if it correctly identifies whether the amount of Money is equal to zero */
 		assertEquals(false, SEK100.isZero());
 		assertEquals(false, EUR10.isZero());
 		assertEquals(false, SEK200.isZero());
@@ -116,6 +124,7 @@ public class MoneyTest {
 
 	@Test
 	public void testNegate() {
+		/* Check if it correctly negates the amount of Money */
 		assertEquals(SEKn100, SEK100.negate());
 		assertEquals(SEK0, SEK0.negate());
 		assertEquals(EUR0, EUR0.negate());
@@ -124,6 +133,7 @@ public class MoneyTest {
 
 	@Test
 	public void testCompareTo() {
+		/* Check if the comparison of different objects of type Money works as intended */
 		assertEquals(0, SEK100.compareTo(EUR10));
 		assertTrue(EUR10.compareTo(EUR20) < 0);
 		assertTrue(SEK200.compareTo(SEK0) > 0);
