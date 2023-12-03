@@ -12,12 +12,12 @@ public class Account {
 
 	/**
 	 * Add a timed payment
-	 * @param id Id of timed payment
+	 * @param id ID of timed payment
 	 * @param interval Number of ticks between payments
 	 * @param next Number of ticks till first payment
 	 * @param amount Amount of Money to transfer each payment
 	 * @param tobank Bank where receiving account resides
-	 * @param toaccount Id of receiving account
+	 * @param toaccount ID of receiving account
 	 */
 	public void addTimedPayment(String id, Integer interval, Integer next, Money amount, Bank tobank, String toaccount) {
 		TimedPayment tp = new TimedPayment(interval, next, amount, this, tobank, toaccount);
@@ -26,7 +26,7 @@ public class Account {
 	
 	/**
 	 * Remove a timed payment
-	 * @param id Id of timed payment to remove
+	 * @param id ID of timed payment to remove
 	 */
 	public void removeTimedPayment(String id) {
 		timedpayments.remove(id);
@@ -34,7 +34,7 @@ public class Account {
 	
 	/**
 	 * Check if a timed payment exists
-	 * @param id Id of timed payment to check for
+	 * @param id ID of timed payment to check for
 	 */
 	public boolean timedPaymentExists(String id) {
 		return timedpayments.containsKey(id);
@@ -43,9 +43,12 @@ public class Account {
 	/**
 	 * A time unit passes in the system
 	 */
-	public void tick() {
+	public void tick() throws NegativeAmountOfMoneyException {
 		for (TimedPayment tp : timedpayments.values()) {
-			tp.tick(); tp.tick();
+			/*
+			* For some reason the tick was performed twice instead of once, so I fixed that
+			* */
+			tp.tick();
 		}
 	}
 	
@@ -90,8 +93,8 @@ public class Account {
 			this.toaccount = toaccount;
 		}
 
-		/* Return value indicates whether or not a transfer was initiated */
-		public Boolean tick() {
+		/* Return value indicates whether a transfer was initiated */
+		public Boolean tick() throws NegativeAmountOfMoneyException {
 			if (next == 0) {
 				next = interval;
 
