@@ -21,9 +21,12 @@ public class AccountTest {
 
 		SweBank.deposit("Alice", new Money(1000000, SEK));
 	}
-	
+
+	/*
+	* I added some exceptions to the method signature.
+	* */
 	@Test
-	public void testAddRemoveTimedPayment() {
+	public void testAddRemoveTimedPayment() throws TimedPaymentDoesNotExistException, TimedPaymentExistsException {
 		/* Check if there is no TimedPayment called "test tp" on the testAccount */
 		assertFalse(testAccount.timedPaymentExists("test tp"));
 		/* Add TimedPayment called "test tp" to the testAccount */
@@ -37,10 +40,10 @@ public class AccountTest {
 	}
 
 	/*
-	* Had to add an extra exception to method signature (NegativeAmountOfMoneyException)
+	* Had to add extra exceptions to method signature
 	* */
 	@Test
-	public void testTimedPayment() throws AccountDoesNotExistException, NegativeAmountOfMoneyException {
+	public void testTimedPayment() throws AccountDoesNotExistException, NegativeAmountOfMoneyException, TimedPaymentExistsException {
 		/* Add a TimePayment called "test tp" to the testAccount */
 		testAccount.addTimedPayment("test tp", 2, 1, new Money(1000, SEK), SweBank, "Alice");
 		/* Check if the initial balance on both accounts is correct */

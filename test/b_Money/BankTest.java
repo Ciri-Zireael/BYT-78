@@ -97,10 +97,10 @@ public class BankTest {
 	}
 
 	/*
-	 * I added a new exception (NegativeAmountOfMoneyException) to the method signature.
+	 * I added new exceptions to the method signature.
 	 * */
 	@Test
-	public void testTimedPayment() throws AccountDoesNotExistException, NegativeAmountOfMoneyException {
+	public void testTimedPayment() throws AccountDoesNotExistException, NegativeAmountOfMoneyException, TimedPaymentExistsException, TimedPaymentDoesNotExistException {
 		/* Check if the timed payment works as intended */
 
 		/* Set up */

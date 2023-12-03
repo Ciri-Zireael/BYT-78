@@ -198,7 +198,7 @@ public class Bank {
 	 * @param tobank Bank where receiving account resides
 	 * @param toaccount ID of receiving account
 	 */
-	public void addTimedPayment(String accountid, String payid, Integer interval, Integer next, Money amount, Bank tobank, String toaccount) {
+	public void addTimedPayment(String accountid, String payid, Integer interval, Integer next, Money amount, Bank tobank, String toaccount) throws TimedPaymentExistsException {
 		Account account = accountlist.get(accountid);
 		account.addTimedPayment(payid, interval, next, amount, tobank, toaccount);
 	}
@@ -208,7 +208,7 @@ public class Bank {
 	 * @param accountid ID of account to remove timed payment from
 	 * @param id ID of timed payment
 	 */
-	public void removeTimedPayment(String accountid, String id) {
+	public void removeTimedPayment(String accountid, String id) throws TimedPaymentDoesNotExistException {
 		Account account = accountlist.get(accountid);
 		account.removeTimedPayment(id);
 	}
