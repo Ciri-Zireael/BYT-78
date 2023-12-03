@@ -24,21 +24,73 @@ public class AccountTest {
 	
 	@Test
 	public void testAddRemoveTimedPayment() {
-		fail("Write test case here");
+		/* Check if there is no TimedPayment called "test tp" on the testAccount */
+		assertFalse(testAccount.timedPaymentExists("test tp"));
+		/* Add TimedPayment called "test tp" to the testAccount */
+		testAccount.addTimedPayment("test tp", 2, 1, new Money(1000, SEK), SweBank, "Alice");
+		/* Check if there is a TimedPayment called "test tp" on the testAccount */
+		assertTrue(testAccount.timedPaymentExists("test tp"));
+		/* Remove TimedPayment called "test tp" of the testAccount */
+		testAccount.removeTimedPayment("test tp");
+		/* Check if there is no TimedPayment called "test tp" of the testAccount */
+		assertFalse(testAccount.timedPaymentExists("test tp"));
 	}
-	
+
+	/*
+	* Had to add an extra exception to method signature (NegativeAmountOfMoneyException)
+	* */
 	@Test
-	public void testTimedPayment() throws AccountDoesNotExistException {
-		fail("Write test case here");
+	public void testTimedPayment() throws AccountDoesNotExistException, NegativeAmountOfMoneyException {
+		/* Add a TimePayment called "test tp" to the testAccount */
+		testAccount.addTimedPayment("test tp", 2, 1, new Money(1000, SEK), SweBank, "Alice");
+		/* Check if the initial balance on both accounts is correct */
+		assertEquals(100000, testAccount.getBalance().getAmount(), 0.001);
+		assertEquals(10000, SweBank.getBalance("Alice"), 0.001);
+		/* Perform a tick */
+		testAccount.tick();
+		/* Check if the balance on both accounts is correct */
+		assertEquals(100000, testAccount.getBalance().getAmount(), 0.001);
+		assertEquals(10000, SweBank.getBalance("Alice"), 0.001);
+		/* Perform a tick */
+		testAccount.tick();
+		/* Check if the balance on both accounts is correct */
+		assertEquals(99990, testAccount.getBalance().getAmount(), 0.001);
+		assertEquals(10010, SweBank.getBalance("Alice"), 0.001);
+		/* Perform a tick */
+		testAccount.tick();
+		/* Check if the balance on both accounts is correct */
+		assertEquals(99990, testAccount.getBalance().getAmount(), 0.001);
+		assertEquals(10010, SweBank.getBalance("Alice"), 0.001);
+		/* Perform a tick */
+		testAccount.tick();
+		/* Check if the balance on both accounts is correct */
+		assertEquals(99990, testAccount.getBalance().getAmount(), 0.001);
+		assertEquals(10010, SweBank.getBalance("Alice"), 0.001);
+		/* Perform a tick */
+		testAccount.tick();
+		/* Check if the balance on both accounts is correct */
+		assertEquals(99980, testAccount.getBalance().getAmount(), 0.001);
+		assertEquals(10020, SweBank.getBalance("Alice"), 0.001);
 	}
 
 	@Test
 	public void testAddWithdraw() {
-		fail("Write test case here");
+		/* Check if the initial balance is correct */
+		assertEquals(100000, testAccount.getBalance().getAmount(), 0.001);
+		/* Perform a tick */
+		testAccount.withdraw(new Money(100000, SEK));
+		/* Check if the balance on both accounts is correct */
+		assertEquals(99000, testAccount.getBalance().getAmount(), 0.001);
 	}
 	
 	@Test
 	public void testGetBalance() {
-		fail("Write test case here");
+		/* Check if you get the correct balance */
+		assertEquals(new Money(10000000, SEK), testAccount.getBalance());
+		try {
+			assertEquals(new Money(1000000, SEK), SweBank.getAccount("Alice").getBalance());
+		} catch (AccountDoesNotExistException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }
